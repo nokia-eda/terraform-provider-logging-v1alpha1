@@ -1,0 +1,204 @@
+app_group:
+  - read:
+      path: /apps/logging.eda.nokia.com
+      method: GET
+
+intent_targets:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_targets
+      method: GET
+
+k8_s_topology_request:
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_topology
+      method: POST
+
+resource_history:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_revs
+      method: GET
+
+resource_list:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1
+      method: GET
+
+status:
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: DELETE
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: DELETE
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: DELETE
+
+ui_result:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/_ui/{pathname}
+      method: GET
+
+com.nokia.eda.logging.v1alpha1.destination:
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+      method: POST
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: GET
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: PUT
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: PATCH
+
+com.nokia.eda.logging.v1alpha1.destination_list:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/destinations
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+      method: GET
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+      method: DELETE
+
+com.nokia.eda.logging.v1alpha1.destination_deleted_resources:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/_deleted
+      method: GET
+
+com.nokia.eda.logging.v1alpha1.log:
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+      method: POST
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: GET
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: PUT
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: PATCH
+
+com.nokia.eda.logging.v1alpha1.log_list:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/logs
+      method: GET
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+      method: GET
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+      method: DELETE
+
+com.nokia.eda.logging.v1alpha1.log_deleted_resources:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/_deleted
+      method: GET
+
+com.nokia.eda.logging.v1alpha1.source:
+  - create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+      method: POST
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: GET
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: PUT
+  - update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: PATCH
+
+com.nokia.eda.logging.v1alpha1.source_list:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+      method: GET
+  - delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+      method: DELETE
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/sources
+      method: GET
+
+com.nokia.eda.logging.v1alpha1.source_deleted_resources:
+  - read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/_deleted
+      method: GET
+
+totalPaths: 24
+totalSchemas: 66
+usedSchemas: 16
+unusedSchemas: 50
+unusedSchemaList:
+  - AppGroupVersion
+  - ErrorResponse
+  - IntentTarget
+  - K8SPatchOp
+  - OverlayState
+  - Patch
+  - Resource
+  - ResourceHistoryEntry
+  - ResourceTopology
+  - StatusDetails
+  - TopoAttrMetadata
+  - TopoAttribute
+  - TopoBoolExpression
+  - TopoBoolLiteral
+  - TopoElemMetadata
+  - TopoEndpointBoolExpression
+  - TopoField
+  - TopoFixedBoolExpression
+  - TopoLabelSelector
+  - TopoLiteralStatusOrBadge
+  - TopoLiteralValue
+  - TopoLogicalExpression
+  - TopoNodeGrouping
+  - TopoOverlayEndpoint
+  - TopoOverlayEndpointState
+  - TopoOverlayLink
+  - TopoOverlayLinkGroup
+  - TopoOverlayLinkGroupEndpoint
+  - TopoOverlayLinkState
+  - TopoOverlayNode
+  - TopoOverlayNodeOrGroup
+  - TopoOverlayNodeState
+  - TopoOverlayValue
+  - TopoSchema
+  - TopoStateFilter
+  - TopoValue
+  - TopoValueExpression
+  - Topology
+  - com.nokia.eda.logging.v1alpha1.Destination_DeletedResourceEntry
+  - com.nokia.eda.logging.v1alpha1.Destination_alarms
+  - com.nokia.eda.logging.v1alpha1.Destination_deviations
+  - com.nokia.eda.logging.v1alpha1.Destination_metadata
+  - com.nokia.eda.logging.v1alpha1.Log_DeletedResourceEntry
+  - com.nokia.eda.logging.v1alpha1.Log_alarms
+  - com.nokia.eda.logging.v1alpha1.Log_deviations
+  - com.nokia.eda.logging.v1alpha1.Log_metadata
+  - com.nokia.eda.logging.v1alpha1.Source_DeletedResourceEntry
+  - com.nokia.eda.logging.v1alpha1.Source_alarms
+  - com.nokia.eda.logging.v1alpha1.Source_deviations
+  - com.nokia.eda.logging.v1alpha1.Source_metadata

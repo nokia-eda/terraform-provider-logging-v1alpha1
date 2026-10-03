@@ -1,0 +1,5987 @@
+{
+  "components": {
+    "schemas": {
+      "AppGroup": {
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "preferredVersion": {
+            "$ref": "#/components/schemas/AppGroupVersion"
+          },
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/AppGroupVersion"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "AppGroupVersion": {
+        "properties": {
+          "groupVersion": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "causeCollection": {
+            "description": "A lower-level set of structured errors.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "causeIndexedCollection": {
+            "description": "A lower-level set of structured errors.\nEach of these errors MUST have index set.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "causeIsInternal": {
+            "description": "If true, then the cause (`causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection`) should be hidden from the user.",
+            "type": "boolean"
+          },
+          "causeSimple": {
+            "description": "Simple string error type.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "type": "string"
+          },
+          "causeWrapped": {
+            "type": "object"
+          },
+          "domain": {
+            "description": "The \"domain\" for the error.  If empty, it is an EDA\ncore error.  Alternatively it can be an EDA application\n\"apiVersion\" value (e.g. interfaces.eda.nokia.com/v1alpha1)\nindicating that the error is specific to that application.\nThe domain gives the receiver information that they can use\nto help them interpret the \"type\" field.",
+            "type": "string"
+          },
+          "index": {
+            "description": "When processing an array, errors may be generated related to a particular array item.\nIf set, this index indicates to which array item the error applies.",
+            "format": "int64",
+            "type": "integer"
+          },
+          "message": {
+            "description": "The basic text error message for the error response.",
+            "type": "string"
+          },
+          "ref": {
+            "description": "Reference to the error source. Should typically be the URI of the request.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type defines a unique identifier for the error, within the domain.\nThis may be used (along with the domain) to find an internationalization translation for the message.\n\nSHOULD be a valid golang identifier, and SHOULD be in UpperCamelCase.",
+            "type": "string"
+          },
+          "values": {
+            "additionalProperties": true,
+            "description": "Associated data/information.\nThe error \"message\" may contain {{name}} escapes that should be substituted with information from this dictionary.\n\nNote that this map MUST NOT contain JSON objects (`{...}`) or arrays (`[...]`), only simple JSON types are permitted.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "message",
+          "type"
+        ],
+        "title": "Generic error response for REST APIs.",
+        "type": "object"
+      },
+      "IntentTarget": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "IntentTargets": {
+        "items": {
+          "$ref": "#/components/schemas/IntentTarget"
+        },
+        "type": "array"
+      },
+      "K8SPatchOp": {
+        "description": "The definition for a JSON patch for a resource, as in RFC 6902",
+        "properties": {
+          "from": {
+            "description": "Only applies to a \"move\" operation, and is the path to the field/value within\nthe target JSON object that should be moved to the location specified by the \"path\"\nfield.",
+            "example": "/a/b/c",
+            "type": "string"
+          },
+          "op": {
+            "description": "The type of operation this patch should perform.",
+            "enum": [
+              "add",
+              "remove",
+              "replace",
+              "move",
+              "copy",
+              "test"
+            ],
+            "example": "replace",
+            "type": "string"
+          },
+          "path": {
+            "description": "The path to the field within the target JSON object\nthat should be patched according to the \"op\" field.",
+            "example": "/a/b/d",
+            "type": "string"
+          },
+          "value": {
+            "description": "This field would be set to the value which the user intends to put in the\nfield referenced by the \"path\" field.  The type of the value should match\nthe type of the field as indicated by the schema of the resource being\npatched.",
+            "example": "example for a string field",
+            "type": "object"
+          },
+          "x-permissive": {
+            "description": "For an \"add\" operation, an already-present field referenced by the \"path\" will\nresult in an error unless this field is true.  Similarly for a non-existent\ntarget field of a \"remove\" operation.",
+            "type": "boolean"
+          },
+          "x-ui-annotation": {
+            "description": "Metadata maintained in support of the EDA UI.  External use not recommended.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "path"
+        ],
+        "type": "object"
+      },
+      "K8STopologyRequest": {
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/TopoStateFilter"
+          },
+          "recurse": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "OverlayState": {
+        "properties": {
+          "link_groups": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLinkGroup"
+            },
+            "type": "object"
+          },
+          "links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLink"
+            },
+            "type": "object"
+          },
+          "nodes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNode"
+            },
+            "type": "object"
+          },
+          "nodes_and_groups": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNodeOrGroup"
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "Patch": {
+        "items": {
+          "$ref": "#/components/schemas/K8SPatchOp"
+        },
+        "type": "array"
+      },
+      "Resource": {
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespaced": {
+            "type": "boolean"
+          },
+          "readOnly": {
+            "type": "boolean"
+          },
+          "singularName": {
+            "type": "string"
+          },
+          "uiCategory": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ResourceHistory": {
+        "items": {
+          "$ref": "#/components/schemas/ResourceHistoryEntry"
+        },
+        "type": "array"
+      },
+      "ResourceHistoryEntry": {
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "changeType": {
+            "type": "string"
+          },
+          "commitTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "transactionId": {
+            "format": "uint64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ResourceList": {
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "groupVersion": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ResourceTopology": {
+        "properties": {
+          "topology": {
+            "$ref": "#/components/schemas/OverlayState"
+          },
+          "topologyMetadata": {
+            "$ref": "#/components/schemas/Topology"
+          }
+        },
+        "type": "object"
+      },
+      "Status": {
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "details": {
+            "$ref": "#/components/schemas/StatusDetails"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "string": {
+            "type": "string"
+          }
+        },
+        "title": "Status is a return value for calls that don't return other objects.",
+        "type": "object"
+      },
+      "StatusDetails": {
+        "properties": {
+          "group": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoAttrMetadata": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "ui_description": {
+            "type": "string"
+          },
+          "ui_description_key": {
+            "type": "string"
+          },
+          "ui_name": {
+            "type": "string"
+          },
+          "ui_name_key": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoAttribute": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoBoolExpression": {
+        "properties": {
+          "endpoint_expression": {
+            "$ref": "#/components/schemas/TopoEndpointBoolExpression"
+          },
+          "fixed_expression": {
+            "$ref": "#/components/schemas/TopoFixedBoolExpression"
+          },
+          "has_badge": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "label": {
+            "$ref": "#/components/schemas/TopoLabelSelector"
+          },
+          "literal": {
+            "$ref": "#/components/schemas/TopoBoolLiteral"
+          },
+          "logical": {
+            "$ref": "#/components/schemas/TopoLogicalExpression"
+          },
+          "not": {
+            "type": "object"
+          },
+          "value_expression": {
+            "$ref": "#/components/schemas/TopoValueExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoBoolLiteral": {
+        "properties": {
+          "value": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "TopoElemMetadata": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoAttrMetadata"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "subtitle_key": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoEndpointBoolExpression": {
+        "properties": {
+          "endpoint": {
+            "type": "string"
+          },
+          "expression": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoField": {
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoFixedBoolExpression": {
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLabelSelector": {
+        "properties": {
+          "selector": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLiteralStatusOrBadge": {
+        "properties": {
+          "overlay": {
+            "type": "string"
+          },
+          "value": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLiteralValue": {
+        "properties": {
+          "badge": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "bool": {
+            "type": "boolean"
+          },
+          "number": {
+            "format": "double",
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "string": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLogicalExpression": {
+        "properties": {
+          "left": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "right": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoNodeGrouping": {
+        "properties": {
+          "group": {
+            "type": "string"
+          },
+          "group_key": {
+            "type": "string"
+          },
+          "group_ui_name": {
+            "type": "string"
+          },
+          "tier": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayEndpoint": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "cr_name": {
+            "type": "string"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string"
+          },
+          "node_key": {
+            "type": "string"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayEndpointState"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayEndpointState": {
+        "properties": {
+          "state": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLink": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "cr_name": {
+            "type": "string"
+          },
+          "endpoint_a": {
+            "$ref": "#/components/schemas/TopoOverlayEndpoint"
+          },
+          "endpoint_a_name": {
+            "type": "string"
+          },
+          "endpoint_a_namespace": {
+            "type": "string"
+          },
+          "endpoint_b": {
+            "$ref": "#/components/schemas/TopoOverlayEndpoint"
+          },
+          "endpoint_b_name": {
+            "type": "string"
+          },
+          "endpoint_b_namespace": {
+            "type": "string"
+          },
+          "group_key": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLinkState"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLinkGroup": {
+        "properties": {
+          "endpoint_a": {
+            "$ref": "#/components/schemas/TopoOverlayLinkGroupEndpoint"
+          },
+          "endpoint_b": {
+            "$ref": "#/components/schemas/TopoOverlayLinkGroupEndpoint"
+          },
+          "key": {
+            "type": "string"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLinkState"
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLinkGroupEndpoint": {
+        "properties": {
+          "group_key": {
+            "type": "string"
+          },
+          "node_key": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLinkState": {
+        "properties": {
+          "state": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayNode": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "cr_name": {
+            "type": "string"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/TopoNodeGrouping"
+          },
+          "key": {
+            "type": "string"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNodeState"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayNodeOrGroup": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "cr_name": {
+            "type": "string"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/TopoNodeGrouping"
+          },
+          "key": {
+            "type": "string"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "num_nodes": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNodeState"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "type": {
+            "type": "string"
+          },
+          "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayNodeState": {
+        "properties": {
+          "badges": {
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "state": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayValue": {
+        "properties": {
+          "overlay": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoSchema": {
+        "properties": {
+          "group": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoStateFilter": {
+        "properties": {
+          "expand_all_link_groups": {
+            "type": "boolean"
+          },
+          "expand_all_node_groups": {
+            "type": "boolean"
+          },
+          "expanded_link_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "expanded_node_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "link_filter": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          },
+          "node_filter": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoValue": {
+        "properties": {
+          "attribute": {
+            "$ref": "#/components/schemas/TopoAttribute"
+          },
+          "badge": {
+            "$ref": "#/components/schemas/TopoOverlayValue"
+          },
+          "field": {
+            "$ref": "#/components/schemas/TopoField"
+          },
+          "literal": {
+            "$ref": "#/components/schemas/TopoLiteralValue"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TopoOverlayValue"
+          }
+        },
+        "type": "object"
+      },
+      "TopoValueExpression": {
+        "properties": {
+          "left": {
+            "$ref": "#/components/schemas/TopoValue"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "right": {
+            "$ref": "#/components/schemas/TopoValue"
+          }
+        },
+        "type": "object"
+      },
+      "Topology": {
+        "properties": {
+          "endpoints": {
+            "$ref": "#/components/schemas/TopoElemMetadata"
+          },
+          "group": {
+            "type": "string"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "links": {
+            "$ref": "#/components/schemas/TopoElemMetadata"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nodes": {
+            "$ref": "#/components/schemas/TopoElemMetadata"
+          },
+          "ui_description": {
+            "type": "string"
+          },
+          "ui_description_key": {
+            "type": "string"
+          },
+          "ui_name": {
+            "type": "string"
+          },
+          "ui_name_key": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UIResult": {
+        "type": "string"
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination": {
+        "description": "Destination is the Schema for the destinations API",
+        "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_alarms"
+          },
+          "apiVersion": {
+            "default": "logging.eda.nokia.com/v1alpha1",
+            "pattern": "^logging\\.eda\\.nokia\\.com/v1alpha1$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The apiVersion must be set to logging.eda.nokia.com/v1alpha1",
+              "ui-visible-if": "false"
+            }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_deviations"
+          },
+          "kind": {
+            "default": "Destination",
+            "pattern": "^Destination$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The kind must be set to Destination",
+              "ui-visible-if": "false"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_metadata"
+          },
+          "spec": {
+            "description": "DestinationSpec defines the desired state of Destination",
+            "properties": {
+              "file": {
+                "description": "Settings for a file log target.",
+                "properties": {
+                  "location": {
+                    "description": "Path to location where log files are written. Refer to the documentation for default and allowed values.",
+                    "title": "Location",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-description": "Default values differ based on the operating system.\n## SR Linux\nDefault value: /var/log/srlinux/file/ \n\n Allowed values: any Linux path\n## SR OS\nDefault value: cf-unspecified \n\n Allowed values:\n - cf-1\n - cf-2\n - cf-3\n - cf-4",
+                      "ui-order-priority": 400,
+                      "ui-summary": "File path to directory where log files are written."
+                    }
+                  }
+                },
+                "title": "File",
+                "type": "object",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 400,
+                  "ui-visible-if": "spec.type===\"File\""
+                }
+              },
+              "rotation": {
+                "description": "Rotation settings for a Memory or File destination.",
+                "properties": {
+                  "maxEntries": {
+                    "description": "Maximum number of log entries kept in the in-memory buffer. Only supported on SR OS.",
+                    "format": "int64",
+                    "minimum": 1,
+                    "title": "Maximum Number Of Entries",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 105,
+                      "ui-single-line-group": "memorySize",
+                      "ui-visible-if": "spec.type===\"Memory\""
+                    }
+                  },
+                  "maxSizeMegabytes": {
+                    "description": "Maximum size of the in-memory buffer, in megabytes. Only supported on SR Linux.",
+                    "format": "int64",
+                    "minimum": 1,
+                    "title": "Maximum Size",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 100,
+                      "ui-single-line-group": "memorySize",
+                      "ui-visible-if": "spec.type===\"Memory\"",
+                      "units": "\"megabytes\""
+                    }
+                  },
+                  "rolloverIntervalMinutes": {
+                    "description": "Interval, in minutes, at which the current log file is closed and a new one is started. Only supported on SR OS.",
+                    "format": "int64",
+                    "minimum": 1,
+                    "title": "Rollover Interval",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 205,
+                      "ui-single-line-group": "rolloverTrigger",
+                      "ui-visible-if": "spec.type===\"File\"",
+                      "units": "\"minutes\""
+                    }
+                  },
+                  "rolloverSizeMegabytes": {
+                    "description": "File size, in megabytes, at which the current log file is closed and a new one is started. Only supported on SR Linux.",
+                    "format": "int64",
+                    "minimum": 1,
+                    "title": "Rollover Size",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 200,
+                      "ui-single-line-group": "rolloverTrigger",
+                      "ui-visible-if": "spec.type===\"File\"",
+                      "units": "\"megabytes\""
+                    }
+                  },
+                  "rotationLimit": {
+                    "description": "Number of rolled-over log files to keep before the oldest is discarded.",
+                    "format": "int64",
+                    "minimum": 1,
+                    "title": "Rotation Limit",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 300,
+                      "ui-visible-if": "spec.type===\"File\""
+                    }
+                  }
+                },
+                "title": "Rotation",
+                "type": "object",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 300,
+                  "ui-visible-if": "spec.type===\"Memory\" || spec.type===\"File\""
+                }
+              },
+              "syslog": {
+                "description": "Settings for a syslog log target.",
+                "properties": {
+                  "address": {
+                    "description": "Address of the syslog server: an IPv4 address, IPv6 address, or DNS name (FQDN).",
+                    "title": "Address",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 100
+                    }
+                  },
+                  "protocol": {
+                    "default": "UDP",
+                    "description": "Transport protocol used to send syslog messages.",
+                    "enum": [
+                      "TCP",
+                      "UDP",
+                      "TLS"
+                    ],
+                    "title": "Protocol",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 300,
+                      "ui-single-line-group": "syslogProtoPort"
+                    }
+                  },
+                  "remotePort": {
+                    "description": "Remote port on the syslog server.",
+                    "format": "int32",
+                    "maximum": 65536,
+                    "minimum": 0,
+                    "title": "Remote Port",
+                    "type": "integer",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 305,
+                      "ui-single-line-group": "syslogProtoPort"
+                    }
+                  },
+                  "router": {
+                    "description": "Name of the Router custom resource used to reach the syslog server.",
+                    "title": "Router",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-auto-completes": [
+                        {
+                          "condition": "true",
+                          "group": "services.eda.nokia.com",
+                          "resource": "routers",
+                          "type": "gvr"
+                        }
+                      ],
+                      "ui-column-span": 2,
+                      "ui-order-priority": 205,
+                      "ui-single-line-group": "syslogRouter",
+                      "ui-visible-if": "spec.syslog.routerKind===\"Router\""
+                    }
+                  },
+                  "routerKind": {
+                    "description": "Router kind used to reach the syslog server.",
+                    "enum": [
+                      "DefaultRouter",
+                      "ManagementRouter",
+                      "Router"
+                    ],
+                    "title": "Router Kind",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 200,
+                      "ui-single-line-group": "syslogRouter"
+                    }
+                  },
+                  "tlsProfile": {
+                    "description": "Name of the TLS profile used when syslog is sent over TLS.",
+                    "title": "TLS Profile",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 400,
+                      "ui-visible-if": "spec.syslog.protocol===\"TLS\""
+                    }
+                  }
+                },
+                "required": [
+                  "address",
+                  "routerKind"
+                ],
+                "title": "Syslog",
+                "type": "object",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 200,
+                  "ui-visible-if": "spec.type===\"Syslog\""
+                }
+              },
+              "type": {
+                "description": "Type of log target.",
+                "enum": [
+                  "Memory",
+                  "File",
+                  "Syslog"
+                ],
+                "title": "Log Target Type",
+                "type": "string",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 100
+                }
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "title": "Specification",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 30
+            }
+          },
+          "status": {
+            "description": "DestinationStatus defines the observed state of Destination",
+            "readOnly": true,
+            "title": "Status",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 20
+            }
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind",
+          "metadata",
+          "spec"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.DestinationList": {
+        "description": "DestinationList is a list of destinations",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+            },
+            "type": "array"
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination_DeletedResourceEntry": {
+        "properties": {
+          "commitTime": {
+            "format": "date-time",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitTime"
+              },
+              "ui-order-priority": 50,
+              "ui-title": "Commit Time",
+              "ui-title-key": "commitTime"
+            }
+          },
+          "hash": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitHash"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Commit Hash",
+              "ui-title-key": "commitHash"
+            }
+          },
+          "name": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "name"
+              },
+              "key": {
+                "index": 2,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "namespace"
+              },
+              "key": {
+                "index": 1,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          },
+          "transactionId": {
+            "format": "uint64",
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "transactionId"
+              },
+              "ui-order-priority": 30,
+              "ui-title": "Transaction ID",
+              "ui-title-key": "transactionId"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination_DeletedResources": {
+        "items": {
+          "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_DeletedResourceEntry"
+        },
+        "type": "array"
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.critical"
+              },
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.major"
+              },
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.minor"
+              },
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.warning"
+              },
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "alarms"
+          },
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "count_column"
+              },
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "deviations"
+          },
+          "ui-order-priority": 50,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Destination_metadata": {
+        "properties": {
+          "annotations": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "annotations"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Annotations",
+              "ui-title-key": "annotations"
+            }
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "labels"
+              },
+              "ui-auto-completes": [
+                {
+                  "condition": "true",
+                  "group": "logging.eda.nokia.com",
+                  "kind": "Destination",
+                  "type": "label",
+                  "version": "v1alpha1"
+                }
+              ],
+              "ui-order-priority": 30,
+              "ui-title": "Labels",
+              "ui-title-key": "labels"
+            }
+          },
+          "name": {
+            "maxLength": 253,
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "name"
+              },
+              "immutable": true,
+              "key": {
+                "index": 2,
+                "is-mirror": true,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-pattern-error": "A valid name is made up of one or more components where each component is separated by period characters.  Each component must start and end with a lower case alphanumeric character and the body of the component is made up of zero or more lower case alphanumeric and hyphen characters.",
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "namespace"
+              },
+              "immutable": true,
+              "key": {
+                "index": 1,
+                "is-mirror": true,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "namespace"
+        ],
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "metadata"
+          },
+          "ui-order-priority": 10,
+          "ui-title": "Metadata",
+          "ui-title-key": "metadata"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Log": {
+        "description": "Log is the Schema for the logs API",
+        "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_alarms"
+          },
+          "apiVersion": {
+            "default": "logging.eda.nokia.com/v1alpha1",
+            "pattern": "^logging\\.eda\\.nokia\\.com/v1alpha1$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The apiVersion must be set to logging.eda.nokia.com/v1alpha1",
+              "ui-visible-if": "false"
+            }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_deviations"
+          },
+          "kind": {
+            "default": "Log",
+            "pattern": "^Log$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The kind must be set to Log",
+              "ui-visible-if": "false"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_metadata"
+          },
+          "spec": {
+            "description": "LogSpec defines the desired state of Log",
+            "properties": {
+              "destinationSelectors": {
+                "description": "Label selector matching destinations to send the log messages to.",
+                "format": "labelselector",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Destination Selectors",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "logging.eda.nokia.com",
+                      "kind": "Destination",
+                      "type": "labelselector"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.destinations?.length \u003e 0 || self.destinationSelectors?.length \u003e 0",
+                      "errorMsg": "Destinations or Destination Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 305,
+                  "ui-single-line-group": "destinationsSelectors"
+                }
+              },
+              "destinations": {
+                "description": "List of destinations to send the log messages to.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Destinations",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "logging.eda.nokia.com",
+                      "resource": "destinations",
+                      "type": "gvr"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.destinations?.length \u003e 0 || self.destinationSelectors?.length \u003e 0",
+                      "errorMsg": "Destinations or Destination Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 300,
+                  "ui-single-line-group": "destinationsSelectors"
+                }
+              },
+              "nodeSelectors": {
+                "description": "Label selector matching nodes where this log is configured.",
+                "format": "labelselector",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Node Selectors",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "core.eda.nokia.com",
+                      "kind": "TopoNode",
+                      "type": "labelselector"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.nodes?.length \u003e 0 || self.nodeSelectors?.length \u003e 0",
+                      "errorMsg": "Nodes or Node Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 105,
+                  "ui-single-line-group": "nodes"
+                }
+              },
+              "nodes": {
+                "description": "List of nodes where this log is configured.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Nodes",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "core.eda.nokia.com",
+                      "resource": "toponodes",
+                      "type": "gvr"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.nodes?.length \u003e 0 || self.nodeSelectors?.length \u003e 0",
+                      "errorMsg": "Nodes or Node Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 100,
+                  "ui-single-line-group": "nodes"
+                }
+              },
+              "sourceSelectors": {
+                "description": "Label selector matching sources for the log messages captured by this log.",
+                "format": "labelselector",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Source Selectors",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "logging.eda.nokia.com",
+                      "kind": "Source",
+                      "type": "labelselector"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.sources?.length \u003e 0 || self.sourceSelectors?.length \u003e 0",
+                      "errorMsg": "Sources or Source Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 205,
+                  "ui-single-line-group": "sourcesSelectors"
+                }
+              },
+              "sources": {
+                "description": "List of Sources that select log messages captured by this log.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Sources",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-auto-completes": [
+                    {
+                      "condition": "true",
+                      "group": "logging.eda.nokia.com",
+                      "resource": "sources",
+                      "type": "gvr"
+                    }
+                  ],
+                  "ui-column-span": 2,
+                  "ui-conditions": [
+                    {
+                      "condition": "self.sources?.length \u003e 0 || self.sourceSelectors?.length \u003e 0",
+                      "errorMsg": "Sources or Source Selectors must be set"
+                    }
+                  ],
+                  "ui-order-priority": 200,
+                  "ui-single-line-group": "sourcesSelectors"
+                }
+              }
+            },
+            "title": "Specification",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 30
+            }
+          },
+          "status": {
+            "description": "LogStatus defines the observed state of Log",
+            "properties": {
+              "nodes": {
+                "description": "Nodes where this log source has been applied.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Applied Nodes",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 100
+                }
+              }
+            },
+            "readOnly": true,
+            "title": "Status",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 20
+            }
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind",
+          "metadata",
+          "spec"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.LogList": {
+        "description": "LogList is a list of logs",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+            },
+            "type": "array"
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Log_DeletedResourceEntry": {
+        "properties": {
+          "commitTime": {
+            "format": "date-time",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitTime"
+              },
+              "ui-order-priority": 50,
+              "ui-title": "Commit Time",
+              "ui-title-key": "commitTime"
+            }
+          },
+          "hash": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitHash"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Commit Hash",
+              "ui-title-key": "commitHash"
+            }
+          },
+          "name": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "name"
+              },
+              "key": {
+                "index": 2,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "namespace"
+              },
+              "key": {
+                "index": 1,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          },
+          "transactionId": {
+            "format": "uint64",
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "transactionId"
+              },
+              "ui-order-priority": 30,
+              "ui-title": "Transaction ID",
+              "ui-title-key": "transactionId"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Log_DeletedResources": {
+        "items": {
+          "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_DeletedResourceEntry"
+        },
+        "type": "array"
+      },
+      "com.nokia.eda.logging.v1alpha1.Log_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.critical"
+              },
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.major"
+              },
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.minor"
+              },
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.warning"
+              },
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "alarms"
+          },
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Log_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "count_column"
+              },
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "deviations"
+          },
+          "ui-order-priority": 50,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Log_metadata": {
+        "properties": {
+          "annotations": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "annotations"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Annotations",
+              "ui-title-key": "annotations"
+            }
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "labels"
+              },
+              "ui-auto-completes": [
+                {
+                  "condition": "true",
+                  "group": "logging.eda.nokia.com",
+                  "kind": "Log",
+                  "type": "label",
+                  "version": "v1alpha1"
+                }
+              ],
+              "ui-order-priority": 30,
+              "ui-title": "Labels",
+              "ui-title-key": "labels"
+            }
+          },
+          "name": {
+            "maxLength": 253,
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "name"
+              },
+              "immutable": true,
+              "key": {
+                "index": 2,
+                "is-mirror": true,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-pattern-error": "A valid name is made up of one or more components where each component is separated by period characters.  Each component must start and end with a lower case alphanumeric character and the body of the component is made up of zero or more lower case alphanumeric and hyphen characters.",
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "namespace"
+              },
+              "immutable": true,
+              "key": {
+                "index": 1,
+                "is-mirror": true,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "namespace"
+        ],
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "metadata"
+          },
+          "ui-order-priority": 10,
+          "ui-title": "Metadata",
+          "ui-title-key": "metadata"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Source": {
+        "description": "Source is the Schema for the sources API",
+        "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_alarms"
+          },
+          "apiVersion": {
+            "default": "logging.eda.nokia.com/v1alpha1",
+            "pattern": "^logging\\.eda\\.nokia\\.com/v1alpha1$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The apiVersion must be set to logging.eda.nokia.com/v1alpha1",
+              "ui-visible-if": "false"
+            }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_deviations"
+          },
+          "kind": {
+            "default": "Source",
+            "pattern": "^Source$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-pattern-error": "The kind must be set to Source",
+              "ui-visible-if": "false"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_metadata"
+          },
+          "spec": {
+            "description": "SourceSpec defines the desired state of Source",
+            "properties": {
+              "facilities": {
+                "description": "Syslog facilities that messages will be sourced from. When left empty, every facility is matched.",
+                "items": {
+                  "description": "Facility selects logs by syslog-style facility for a given operating system and severity comparison.",
+                  "properties": {
+                    "facility": {
+                      "default": "All",
+                      "description": "Facility name or identifier used when matching log records for this operating system.",
+                      "enum": [
+                        "All",
+                        "Kernel",
+                        "User",
+                        "Mail",
+                        "Daemon",
+                        "Auth",
+                        "Syslog",
+                        "LPR",
+                        "News",
+                        "UUCP",
+                        "Cron",
+                        "AuthPriv",
+                        "FTP",
+                        "NTP",
+                        "LogAudit",
+                        "LogAlert",
+                        "Clock",
+                        "Local0",
+                        "Local1",
+                        "Local2",
+                        "Local3",
+                        "Local4",
+                        "Local5",
+                        "Local6",
+                        "Local7"
+                      ],
+                      "title": "Facility",
+                      "type": "string",
+                      "x-eda-nokia-com": {
+                        "ui-column-span": 4,
+                        "ui-order-priority": 200
+                      }
+                    },
+                    "severity": {
+                      "description": "Severity level used together with the severity operator when evaluating log records for this facility.",
+                      "enum": [
+                        "Debug",
+                        "Informational",
+                        "Notice",
+                        "Warning",
+                        "Error",
+                        "Critical",
+                        "Alert",
+                        "Emergency"
+                      ],
+                      "title": "Severity Level",
+                      "type": "string",
+                      "x-eda-nokia-com": {
+                        "ui-column-span": 2,
+                        "ui-order-priority": 305,
+                        "ui-single-line-group": "facilitySeverity"
+                      }
+                    },
+                    "severityOperator": {
+                      "description": "How log record severity is compared to the configured Severity for this facility (at or above the level, or exactly that level).",
+                      "enum": [
+                        "Minimum",
+                        "Exact"
+                      ],
+                      "title": "Severity Operator",
+                      "type": "string",
+                      "x-eda-nokia-com": {
+                        "ui-column-span": 2,
+                        "ui-order-priority": 300,
+                        "ui-single-line-group": "facilitySeverity"
+                      }
+                    }
+                  },
+                  "required": [
+                    "severityOperator"
+                  ],
+                  "type": "object"
+                },
+                "title": "Facilities",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-description": "Facilities are not supported by every network operating system; see the documentation for details.",
+                  "ui-may-reorder": true,
+                  "ui-order-priority": 400,
+                  "ui-summary": "Syslog facilities that messages will be sourced from. When left empty, every facility is matched."
+                }
+              },
+              "messageFiltering": {
+                "description": "Optional message filtering: evaluate log message text against filter rules and allow or deny forwarding based on the match mode.",
+                "properties": {
+                  "matchMode": {
+                    "default": "Allow",
+                    "description": "Whether log messages that match the filter rules are forwarded or blocked.",
+                    "enum": [
+                      "Allow",
+                      "Deny"
+                    ],
+                    "title": "Match Mode",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 100
+                    }
+                  },
+                  "rules": {
+                    "description": "Filter rules applied to log message text. If the message matches at least one rule, it is forwarded or blocked according to the match mode.",
+                    "items": {
+                      "description": "MessageRule defines one text match entry used for message filtering.",
+                      "properties": {
+                        "operator": {
+                          "description": "How Text is matched against the log message for filtering.",
+                          "enum": [
+                            "StartsWith",
+                            "Contains",
+                            "Regex"
+                          ],
+                          "title": "Operator",
+                          "type": "string",
+                          "x-eda-nokia-com": {
+                            "ui-column-span": 2,
+                            "ui-order-priority": 100,
+                            "ui-single-line-group": "messageRuleRow"
+                          }
+                        },
+                        "text": {
+                          "description": "Text or pattern compared to the log message using Operator.",
+                          "title": "Text",
+                          "type": "string",
+                          "x-eda-nokia-com": {
+                            "ui-column-span": 2,
+                            "ui-order-priority": 105,
+                            "ui-single-line-group": "messageRuleRow"
+                          }
+                        }
+                      },
+                      "required": [
+                        "operator",
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "title": "Filter Rules",
+                    "type": "array",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-may-reorder": true,
+                      "ui-order-priority": 200
+                    }
+                  }
+                },
+                "title": "Message Filtering",
+                "type": "object",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-order-priority": 500
+                }
+              },
+              "subsystems": {
+                "description": "Which subsystems to include in the log records. If no subsystems are selected, all subsystems will be included.",
+                "properties": {
+                  "extensions": {
+                    "description": "Used to define more granular and OS-specific subsystems.",
+                    "properties": {
+                      "srlExtensions": {
+                        "description": "SR Linux-specific subsystem selector. Extensions are limited to one operating system per Source.",
+                        "items": {
+                          "enum": [
+                            "All",
+                            "AAA",
+                            "Accounting",
+                            "ACL",
+                            "Alarm",
+                            "App",
+                            "ARPND",
+                            "BFD",
+                            "BGP",
+                            "BridgeTable",
+                            "Cflowd",
+                            "Chassis",
+                            "Debug",
+                            "DHCP",
+                            "ETHCFM",
+                            "EVPN",
+                            "FIB",
+                            "GNMI",
+                            "GNOI",
+                            "GNPSI",
+                            "GNSI",
+                            "GRIBI",
+                            "GRPC",
+                            "IGMP",
+                            "ISIS",
+                            "JSON",
+                            "LAG",
+                            "LDP",
+                            "License",
+                            "Linux",
+                            "LLDP",
+                            "Log",
+                            "Mgmt",
+                            "Mirror",
+                            "MLD",
+                            "MPLS",
+                            "NETCONF",
+                            "NetInst",
+                            "OamPm",
+                            "OSPF",
+                            "P4RT",
+                            "PCC",
+                            "PIM",
+                            "Platform",
+                            "Policy",
+                            "PW",
+                            "QoS",
+                            "SATH",
+                            "SDK",
+                            "SFLOW",
+                            "StaticRoute",
+                            "STP",
+                            "Sync",
+                            "TLS",
+                            "TWAMP",
+                            "UsrContainer",
+                            "VXLAN",
+                            "XDP"
+                          ],
+                          "type": "string"
+                        },
+                        "title": "SR Linux Extensions",
+                        "type": "array",
+                        "x-eda-nokia-com": {
+                          "ui-column-span": 4,
+                          "ui-order-priority": 200
+                        }
+                      },
+                      "srosExtensions": {
+                        "description": "SROS-specific subsystem selector. Extensions are limited to one operating system per Source.",
+                        "items": {
+                          "enum": [
+                            "All",
+                            "ADP",
+                            "AnySec",
+                            "ApplicationAssurance",
+                            "AutoProv",
+                            "BFD",
+                            "BGP",
+                            "BIER",
+                            "CallTrace",
+                            "Cflowd",
+                            "Chassis",
+                            "Debug",
+                            "DHCP",
+                            "DHCPS",
+                            "Diameter",
+                            "Dot1x",
+                            "DynSvc",
+                            "EFMOAM",
+                            "ELMI",
+                            "ERing",
+                            "EthCFM",
+                            "ETun",
+                            "Filter",
+                            "GSMP",
+                            "IGMP",
+                            "IGMPSnooping",
+                            "IP",
+                            "IPSec",
+                            "ISIS",
+                            "L2TP",
+                            "LAG",
+                            "LDAP",
+                            "LDP",
+                            "LI",
+                            "LLDP",
+                            "Logger",
+                            "MACSEC",
+                            "MCPath",
+                            "MCRedundancy",
+                            "MgmtCore",
+                            "Mirror",
+                            "MLD",
+                            "MLDSnooping",
+                            "MPLS",
+                            "MPLSTP",
+                            "MSDP",
+                            "NAT",
+                            "NTP",
+                            "OAM",
+                            "OSPF",
+                            "PCAP",
+                            "PCEP",
+                            "PFCP",
+                            "PIM",
+                            "PIMSnooping",
+                            "Port",
+                            "PPPoE",
+                            "PPPoEClnt",
+                            "PTP",
+                            "Python",
+                            "Radius",
+                            "RIP",
+                            "RIPng",
+                            "RoutePolicy",
+                            "RPKI",
+                            "RSVP",
+                            "Satellite",
+                            "Security",
+                            "SFLOW",
+                            "SNMP",
+                            "SRMPLS",
+                            "SRPolicy",
+                            "SRv6",
+                            "STP",
+                            "SvcMgr",
+                            "System",
+                            "TLS",
+                            "TreeSID",
+                            "User",
+                            "Video",
+                            "VRRP",
+                            "VRtr",
+                            "WLANGW",
+                            "WPP"
+                          ],
+                          "type": "string"
+                        },
+                        "title": "SR OS Extensions",
+                        "type": "array",
+                        "x-eda-nokia-com": {
+                          "ui-column-span": 4,
+                          "ui-order-priority": 300
+                        }
+                      }
+                    },
+                    "title": "Extensions",
+                    "type": "object",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 400
+                    }
+                  },
+                  "operational": {
+                    "description": "Operational subsystems.",
+                    "items": {
+                      "enum": [
+                        "All",
+                        "Alarm",
+                        "CFLOWD",
+                        "Chassis",
+                        "GNXI",
+                        "License",
+                        "Log",
+                        "NETCONF",
+                        "NTP",
+                        "SFLOW",
+                        "SNMP",
+                        "TWAMP"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Operational Subsystems",
+                    "type": "array",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 105,
+                      "ui-single-line-group": "securityOperationSubsystems"
+                    }
+                  },
+                  "routing": {
+                    "description": "Routing-related subsystems.",
+                    "items": {
+                      "enum": [
+                        "All",
+                        "ACL",
+                        "ARP",
+                        "BFD",
+                        "BGP",
+                        "DHCP",
+                        "EVPN",
+                        "FIB",
+                        "Filter",
+                        "Interface",
+                        "ISIS",
+                        "LAG",
+                        "LDP",
+                        "LLDP",
+                        "Mirror",
+                        "MPLS",
+                        "Multicast",
+                        "OSPF",
+                        "QoS",
+                        "StaticRoute",
+                        "STP",
+                        "VXLAN"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Routing Subsystems",
+                    "type": "array",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 4,
+                      "ui-order-priority": 200
+                    }
+                  },
+                  "security": {
+                    "description": "Security-related subsystems.",
+                    "items": {
+                      "enum": [
+                        "All",
+                        "AAA",
+                        "Linux",
+                        "TLS"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Security Subsystems",
+                    "type": "array",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 100,
+                      "ui-single-line-group": "securityOperationSubsystems"
+                    }
+                  },
+                  "severity": {
+                    "description": "Severity level to filter on.",
+                    "enum": [
+                      "Debug",
+                      "Informational",
+                      "Notice",
+                      "Warning",
+                      "Error",
+                      "Critical",
+                      "Alert",
+                      "Emergency"
+                    ],
+                    "title": "Severity Level",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 305,
+                      "ui-single-line-group": "severity"
+                    }
+                  },
+                  "severityOperator": {
+                    "description": "Operator to determine which severity levels to filter on.",
+                    "enum": [
+                      "Minimum",
+                      "Exact"
+                    ],
+                    "title": "Severity Operator",
+                    "type": "string",
+                    "x-eda-nokia-com": {
+                      "ui-column-span": 2,
+                      "ui-order-priority": 300,
+                      "ui-single-line-group": "severity"
+                    }
+                  }
+                },
+                "title": "Subsystems",
+                "type": "object",
+                "x-eda-nokia-com": {
+                  "ui-column-span": 4,
+                  "ui-may-reorder": true,
+                  "ui-order-priority": 300,
+                  "ui-presence-default": true
+                }
+              }
+            },
+            "title": "Specification",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 30
+            }
+          },
+          "status": {
+            "description": "SourceStatus defines the observed state of Source",
+            "readOnly": true,
+            "title": "Status",
+            "type": "object",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 20
+            }
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind",
+          "metadata",
+          "spec"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.SourceList": {
+        "description": "SourceList is a list of sources",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+            },
+            "type": "array"
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Source_DeletedResourceEntry": {
+        "properties": {
+          "commitTime": {
+            "format": "date-time",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitTime"
+              },
+              "ui-order-priority": 50,
+              "ui-title": "Commit Time",
+              "ui-title-key": "commitTime"
+            }
+          },
+          "hash": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "commitHash"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Commit Hash",
+              "ui-title-key": "commitHash"
+            }
+          },
+          "name": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "name"
+              },
+              "key": {
+                "index": 2,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "namespace"
+              },
+              "key": {
+                "index": 1,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          },
+          "transactionId": {
+            "format": "uint64",
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "group": "core.eda.nokia.com",
+                "title": "transactionId"
+              },
+              "ui-order-priority": 30,
+              "ui-title": "Transaction ID",
+              "ui-title-key": "transactionId"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "com.nokia.eda.logging.v1alpha1.Source_DeletedResources": {
+        "items": {
+          "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_DeletedResourceEntry"
+        },
+        "type": "array"
+      },
+      "com.nokia.eda.logging.v1alpha1.Source_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.critical"
+              },
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.major"
+              },
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.minor"
+              },
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "alarm_severities.warning"
+              },
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "alarms"
+          },
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Source_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "count_column"
+              },
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "deviations"
+          },
+          "ui-order-priority": 50,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
+      },
+      "com.nokia.eda.logging.v1alpha1.Source_metadata": {
+        "properties": {
+          "annotations": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "annotations"
+              },
+              "ui-order-priority": 40,
+              "ui-title": "Annotations",
+              "ui-title-key": "annotations"
+            }
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "labels"
+              },
+              "ui-auto-completes": [
+                {
+                  "condition": "true",
+                  "group": "logging.eda.nokia.com",
+                  "kind": "Source",
+                  "type": "label",
+                  "version": "v1alpha1"
+                }
+              ],
+              "ui-order-priority": 30,
+              "ui-title": "Labels",
+              "ui-title-key": "labels"
+            }
+          },
+          "name": {
+            "maxLength": 253,
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "name"
+              },
+              "immutable": true,
+              "key": {
+                "index": 2,
+                "is-mirror": true,
+                "is-name": true
+              },
+              "ui-order-priority": 10,
+              "ui-pattern-error": "A valid name is made up of one or more components where each component is separated by period characters.  Each component must start and end with a lower case alphanumeric character and the body of the component is made up of zero or more lower case alphanumeric and hyphen characters.",
+              "ui-title": "Name",
+              "ui-title-key": "name"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "i18n-keys": {
+                "title": "namespace"
+              },
+              "immutable": true,
+              "key": {
+                "index": 1,
+                "is-mirror": true,
+                "is-namespace": true
+              },
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "namespace"
+        ],
+        "type": "object",
+        "x-eda-nokia-com": {
+          "i18n-keys": {
+            "group": "core.eda.nokia.com",
+            "title": "metadata"
+          },
+          "ui-order-priority": 10,
+          "ui-title": "Metadata",
+          "ui-title-key": "metadata"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "Logging Application APIs.",
+    "version": "v1alpha1"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/apps/logging.eda.nokia.com": {
+      "get": {
+        "description": "list versions available from logging.eda.nokia.com",
+        "operationId": "getVersionLoggingEdaNokiaCom",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppGroup"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppGroup"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1": {
+      "get": {
+        "description": "list resources available from logging.eda.nokia.com/v1alpha1",
+        "operationId": "getResourcesLoggingEdaNokiaComV1alpha1",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/_ui/{pathname}": {
+      "get": {
+        "description": "get UI specification for logging.eda.nokia.com v1alpha1",
+        "operationId": "uiLoggingEdaNokiaComV1alpha1",
+        "parameters": [
+          {
+            "description": "pathname to the UI specification to retrieve",
+            "in": "path",
+            "name": "pathname",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UIResult"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UIResult"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/destinations": {
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1Destinations",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list destinations",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/logs": {
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1Logs",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list logs",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations": {
+      "delete": {
+        "operationId": "deleteAllLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Delete all instances of Destination in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.DestinationList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list destinations in namespace",
+        "tags": [
+          "apps"
+        ]
+      },
+      "post": {
+        "description": "create a Destination",
+        "operationId": "createLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/_deleted": {
+      "get": {
+        "operationId": "getDeletedLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_DeletedResources"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination_DeletedResources"
+                }
+              }
+            },
+            "description": "Returns list of deleted resource entries"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get information about the instances of Destination that have been deleted that existed in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}": {
+      "delete": {
+        "description": "delete the specified Destination",
+        "operationId": "deleteLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the Destination to delete",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "read the specified Destination.  If a git hash query parameter\nis supplied, the resource as it existed at the time of the git hash\nwill be returned. Streaming is not supported when a particular revision\nis asked for.",
+        "operationId": "readLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "name of the Destination",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "resource content will be returned as it was at the time of this git hash",
+            "in": "query",
+            "name": "hash",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "patch": {
+        "description": "patch a Destination",
+        "operationId": "patchLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Patch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              }
+            },
+            "description": "The response for a successful EDA resource patch operation."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "put": {
+        "description": "replace a Destination",
+        "operationId": "replaceLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Destination"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_revs": {
+      "get": {
+        "operationId": "getHistoryLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "name of the Destination to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "maximum number of history entries to return",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "uint64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              }
+            },
+            "description": "Returns the change history of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get revision history for the specified namespaced Destination.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_targets": {
+      "get": {
+        "operationId": "getTargetsLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "name of the Destination",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              }
+            },
+            "description": "Returns the list of intent targets for the specified Destination resource."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get intent targets for the specified namespaced Destination.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_topology": {
+      "post": {
+        "operationId": "postTopologyLoggingEdaNokiaComV1alpha1NamespaceDestinations",
+        "parameters": [
+          {
+            "description": "name of the Destination to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/K8STopologyRequest"
+              }
+            }
+          },
+          "description": "the details of topology to retrieve",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              }
+            },
+            "description": "Returns the topology of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Retrieve the topology for the specified namespaced Destination.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs": {
+      "delete": {
+        "operationId": "deleteAllLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Delete all instances of Log in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.LogList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list logs in namespace",
+        "tags": [
+          "apps"
+        ]
+      },
+      "post": {
+        "description": "create a Log",
+        "operationId": "createLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/_deleted": {
+      "get": {
+        "operationId": "getDeletedLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_DeletedResources"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log_DeletedResources"
+                }
+              }
+            },
+            "description": "Returns list of deleted resource entries"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get information about the instances of Log that have been deleted that existed in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}": {
+      "delete": {
+        "description": "delete the specified Log",
+        "operationId": "deleteLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the Log to delete",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "read the specified Log.  If a git hash query parameter\nis supplied, the resource as it existed at the time of the git hash\nwill be returned. Streaming is not supported when a particular revision\nis asked for.",
+        "operationId": "readLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "name of the Log",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "resource content will be returned as it was at the time of this git hash",
+            "in": "query",
+            "name": "hash",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "patch": {
+        "description": "patch a Log",
+        "operationId": "patchLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Patch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              }
+            },
+            "description": "The response for a successful EDA resource patch operation."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "put": {
+        "description": "replace a Log",
+        "operationId": "replaceLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Log"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_revs": {
+      "get": {
+        "operationId": "getHistoryLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "name of the Log to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "maximum number of history entries to return",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "uint64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              }
+            },
+            "description": "Returns the change history of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get revision history for the specified namespaced Log.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_targets": {
+      "get": {
+        "operationId": "getTargetsLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "name of the Log",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              }
+            },
+            "description": "Returns the list of intent targets for the specified Log resource."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get intent targets for the specified namespaced Log.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}/_topology": {
+      "post": {
+        "operationId": "postTopologyLoggingEdaNokiaComV1alpha1NamespaceLogs",
+        "parameters": [
+          {
+            "description": "name of the Log to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/K8STopologyRequest"
+              }
+            }
+          },
+          "description": "the details of topology to retrieve",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              }
+            },
+            "description": "Returns the topology of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Retrieve the topology for the specified namespaced Log.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources": {
+      "delete": {
+        "operationId": "deleteAllLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Delete all instances of Source in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list sources in namespace",
+        "tags": [
+          "apps"
+        ]
+      },
+      "post": {
+        "description": "create a Source",
+        "operationId": "createLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/_deleted": {
+      "get": {
+        "operationId": "getDeletedLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_DeletedResources"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source_DeletedResources"
+                }
+              }
+            },
+            "description": "Returns list of deleted resource entries"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get information about the instances of Source that have been deleted that existed in the specified namespace.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}": {
+      "delete": {
+        "description": "delete the specified Source",
+        "operationId": "deleteLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the namespace scope from which to perform the delete",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the Source to delete",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "get": {
+        "description": "read the specified Source.  If a git hash query parameter\nis supplied, the resource as it existed at the time of the git hash\nwill be returned. Streaming is not supported when a particular revision\nis asked for.",
+        "operationId": "readLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "name of the Source",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "resource content will be returned as it was at the time of this git hash",
+            "in": "query",
+            "name": "hash",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "patch": {
+        "description": "patch a Source",
+        "operationId": "patchLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Patch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              }
+            },
+            "description": "The response for a successful EDA resource patch operation."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      },
+      "put": {
+        "description": "replace a Source",
+        "operationId": "replaceLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "If true, pipelines will not be run for the resulting transaction",
+            "in": "query",
+            "name": "skipPipeline",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.Source"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_revs": {
+      "get": {
+        "operationId": "getHistoryLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "name of the Source to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "maximum number of history entries to return",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "uint64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
+              }
+            },
+            "description": "Returns the change history of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get revision history for the specified namespaced Source.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_targets": {
+      "get": {
+        "operationId": "getTargetsLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "name of the Source",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope in which to operate",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              }
+            },
+            "description": "Returns the list of intent targets for the specified Source resource."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get intent targets for the specified namespaced Source.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}/_topology": {
+      "post": {
+        "operationId": "postTopologyLoggingEdaNokiaComV1alpha1NamespaceSources",
+        "parameters": [
+          {
+            "description": "name of the Source to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the namespace scope from which to retrieve the result",
+            "in": "path",
+            "name": "namespace",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/K8STopologyRequest"
+              }
+            }
+          },
+          "description": "the details of topology to retrieve",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              }
+            },
+            "description": "Returns the topology of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Retrieve the topology for the specified namespaced Source.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/logging.eda.nokia.com/v1alpha1/sources": {
+      "get": {
+        "description": "The resulting resources can optionally be a subset of the resource content by using the \"fields\" query parameter.",
+        "operationId": "listLoggingEdaNokiaComV1alpha1Sources",
+        "parameters": [
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned.",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
+            "name": "label-selector",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.logging.v1alpha1.SourceList"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "list sources",
+        "tags": [
+          "apps"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

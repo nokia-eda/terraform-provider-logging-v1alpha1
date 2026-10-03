@@ -1,0 +1,86 @@
+provider:
+  name: logging
+
+data_sources:
+  app_group:
+    read:
+      path: /apps/logging.eda.nokia.com
+      method: GET
+
+  destination:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: GET
+
+  destination_list:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+      method: GET
+
+  log:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: GET
+
+  log_list:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+      method: GET
+
+  resource_list:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1
+      method: GET
+
+  source:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: GET
+
+  source_list:
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+      method: GET
+
+resources:
+  destination:
+    create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+      method: POST
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: GET
+    update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: PUT
+    delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+      method: DELETE
+
+  log:
+    create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+      method: POST
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: GET
+    update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: PUT
+    delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+      method: DELETE
+
+  source:
+    create:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+      method: POST
+    read:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: GET
+    update:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: PUT
+    delete:
+      path: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+      method: DELETE

@@ -1,0 +1,52 @@
+datasources:
+  - model_name: app_group
+    oas_endpoint: /apps/logging.eda.nokia.com
+    oas_schema: AppGroup
+  - model_name: resource_list
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1
+    oas_schema: ResourceList
+  - model_name: destination_list
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+    oas_schema: com.nokia.eda.logging.v1alpha1.DestinationList
+  - model_name: destination
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}
+    oas_schema: com.nokia.eda.logging.v1alpha1.Destination
+  - model_name: log_list
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+    oas_schema: com.nokia.eda.logging.v1alpha1.LogList
+  - model_name: log
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/{name}
+    oas_schema: com.nokia.eda.logging.v1alpha1.Log
+  - model_name: source_list
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+    oas_schema: com.nokia.eda.logging.v1alpha1.SourceList
+  - model_name: source
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/{name}
+    oas_schema: com.nokia.eda.logging.v1alpha1.Source
+
+resources:
+  - model_name: destination
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations
+    oas_schema: com.nokia.eda.logging.v1alpha1.Destination
+  - model_name: log
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs
+    oas_schema: com.nokia.eda.logging.v1alpha1.Log
+  - model_name: source
+    oas_endpoint: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources
+    oas_schema: com.nokia.eda.logging.v1alpha1.Source
+
+qualified:
+  datasources:
+    - oas_schema: IntentTargets
+      get: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_targets
+    - oas_schema: ResourceHistory
+      get: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/{name}/_revs
+    - oas_schema: UIResult
+      get: /apps/logging.eda.nokia.com/v1alpha1/_ui/{pathname}
+    - oas_schema: com.nokia.eda.logging.v1alpha1.Destination_DeletedResources
+      get: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/destinations/_deleted
+    - oas_schema: com.nokia.eda.logging.v1alpha1.Log_DeletedResources
+      get: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/logs/_deleted
+    - oas_schema: com.nokia.eda.logging.v1alpha1.Source_DeletedResources
+      get: /apps/logging.eda.nokia.com/v1alpha1/namespaces/{namespace}/sources/_deleted
+  resources:

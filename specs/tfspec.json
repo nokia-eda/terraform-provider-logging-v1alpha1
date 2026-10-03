@@ -1,0 +1,2914 @@
+{
+    "datasources": [
+        {
+            "name": "app_group",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "preferred_version",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "group_version",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "version",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "versions",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "group_version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "destination",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "name of the Destination"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "resource content will be returned as it was at the time of this git hash"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "file",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed",
+                                        "attributes": [
+                                            {
+                                                "name": "location",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Path to location where log files are written. Refer to the documentation for default and allowed values."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Settings for a file log target."
+                                    }
+                                },
+                                {
+                                    "name": "rotation",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed",
+                                        "attributes": [
+                                            {
+                                                "name": "max_entries",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Maximum number of log entries kept in the in-memory buffer. Only supported on SR OS."
+                                                }
+                                            },
+                                            {
+                                                "name": "max_size_megabytes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Maximum size of the in-memory buffer, in megabytes. Only supported on SR Linux."
+                                                }
+                                            },
+                                            {
+                                                "name": "rollover_interval_minutes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Interval, in minutes, at which the current log file is closed and a new one is started. Only supported on SR OS."
+                                                }
+                                            },
+                                            {
+                                                "name": "rollover_size_megabytes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "File size, in megabytes, at which the current log file is closed and a new one is started. Only supported on SR Linux."
+                                                }
+                                            },
+                                            {
+                                                "name": "rotation_limit",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Number of rolled-over log files to keep before the oldest is discarded."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Rotation settings for a Memory or File destination."
+                                    }
+                                },
+                                {
+                                    "name": "syslog",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed",
+                                        "attributes": [
+                                            {
+                                                "name": "address",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Address of the syslog server: an IPv4 address, IPv6 address, or DNS name (FQDN)."
+                                                }
+                                            },
+                                            {
+                                                "name": "protocol",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Transport protocol used to send syslog messages."
+                                                }
+                                            },
+                                            {
+                                                "name": "remote_port",
+                                                "int64": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Remote port on the syslog server."
+                                                }
+                                            },
+                                            {
+                                                "name": "router",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Name of the Router custom resource used to reach the syslog server."
+                                                }
+                                            },
+                                            {
+                                                "name": "router_kind",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Router kind used to reach the syslog server."
+                                                }
+                                            },
+                                            {
+                                                "name": "tls_profile",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Name of the TLS profile used when syslog is sent over TLS."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Settings for a syslog log target."
+                                    }
+                                },
+                                {
+                                    "name": "type",
+                                    "string": {
+                                        "computed_optional_required": "computed",
+                                        "description": "Type of log target."
+                                    }
+                                }
+                            ],
+                            "description": "DestinationSpec defines the desired state of Destination"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "description": "DestinationStatus defines the observed state of Destination"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "destination_list",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "fields",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched."
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned."
+                        }
+                    },
+                    {
+                        "name": "label_selector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                        }
+                    },
+                    {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "api_version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "kind",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "annotations",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "labels",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "name",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "spec",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "file",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "location",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Path to location where log files are written. Refer to the documentation for default and allowed values."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Settings for a file log target."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "rotation",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "max_entries",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Maximum number of log entries kept in the in-memory buffer. Only supported on SR OS."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "max_size_megabytes",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Maximum size of the in-memory buffer, in megabytes. Only supported on SR Linux."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "rollover_interval_minutes",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Interval, in minutes, at which the current log file is closed and a new one is started. Only supported on SR OS."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "rollover_size_megabytes",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "File size, in megabytes, at which the current log file is closed and a new one is started. Only supported on SR Linux."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "rotation_limit",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Number of rolled-over log files to keep before the oldest is discarded."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Rotation settings for a Memory or File destination."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "syslog",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "address",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Address of the syslog server: an IPv4 address, IPv6 address, or DNS name (FQDN)."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "protocol",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Transport protocol used to send syslog messages."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "remote_port",
+                                                                "int64": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Remote port on the syslog server."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "router",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Name of the Router custom resource used to reach the syslog server."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "router_kind",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Router kind used to reach the syslog server."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "tls_profile",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Name of the TLS profile used when syslog is sent over TLS."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Settings for a syslog log target."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "type",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Type of log target."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "DestinationSpec defines the desired state of Destination"
+                                        }
+                                    },
+                                    {
+                                        "name": "status",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "description": "DestinationStatus defines the observed state of Destination"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "log",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "name of the Log"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "resource content will be returned as it was at the time of this git hash"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "destination_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching destinations to send the log messages to."
+                                    }
+                                },
+                                {
+                                    "name": "destinations",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of destinations to send the log messages to."
+                                    }
+                                },
+                                {
+                                    "name": "node_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching nodes where this log is configured."
+                                    }
+                                },
+                                {
+                                    "name": "nodes",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of nodes where this log is configured."
+                                    }
+                                },
+                                {
+                                    "name": "source_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching sources for the log messages captured by this log."
+                                    }
+                                },
+                                {
+                                    "name": "sources",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of Sources that select log messages captured by this log."
+                                    }
+                                }
+                            ],
+                            "description": "LogSpec defines the desired state of Log"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "nodes",
+                                    "list": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Nodes where this log source has been applied."
+                                    }
+                                }
+                            ],
+                            "description": "LogStatus defines the observed state of Log"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "log_list",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "fields",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched."
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned."
+                        }
+                    },
+                    {
+                        "name": "label_selector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                        }
+                    },
+                    {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "api_version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "kind",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "annotations",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "labels",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "name",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "spec",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "destination_selectors",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "Label selector matching destinations to send the log messages to."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "destinations",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "List of destinations to send the log messages to."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node_selectors",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "Label selector matching nodes where this log is configured."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "nodes",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "List of nodes where this log is configured."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "source_selectors",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "Label selector matching sources for the log messages captured by this log."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sources",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "List of Sources that select log messages captured by this log."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "LogSpec defines the desired state of Log"
+                                        }
+                                    },
+                                    {
+                                        "name": "status",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "nodes",
+                                                    "list": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        },
+                                                        "description": "Nodes where this log source has been applied."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "LogStatus defines the observed state of Log"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "resource_list",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "group_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "resources",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "kind",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "name",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "namespaced",
+                                        "bool": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "read_only",
+                                        "bool": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "singular_name",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "ui_category",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "source",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "name of the Source"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "resource content will be returned as it was at the time of this git hash"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "facilities",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "facility",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Facility name or identifier used when matching log records for this operating system."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "severity",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Severity level used together with the severity operator when evaluating log records for this facility."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "severity_operator",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "How log record severity is compared to the configured Severity for this facility (at or above the level, or exactly that level)."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "Syslog facilities that messages will be sourced from. When left empty, every facility is matched."
+                                    }
+                                },
+                                {
+                                    "name": "message_filtering",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed",
+                                        "attributes": [
+                                            {
+                                                "name": "match_mode",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Whether log messages that match the filter rules are forwarded or blocked."
+                                                }
+                                            },
+                                            {
+                                                "name": "rules",
+                                                "list_nested": {
+                                                    "computed_optional_required": "computed",
+                                                    "nested_object": {
+                                                        "attributes": [
+                                                            {
+                                                                "name": "operator",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "How Text is matched against the log message for filtering."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "text",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Text or pattern compared to the log message using Operator."
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "description": "Filter rules applied to log message text. If the message matches at least one rule, it is forwarded or blocked according to the match mode."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Optional message filtering: evaluate log message text against filter rules and allow or deny forwarding based on the match mode."
+                                    }
+                                },
+                                {
+                                    "name": "subsystems",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed",
+                                        "attributes": [
+                                            {
+                                                "name": "extensions",
+                                                "single_nested": {
+                                                    "computed_optional_required": "computed",
+                                                    "attributes": [
+                                                        {
+                                                            "name": "srl_extensions",
+                                                            "list": {
+                                                                "computed_optional_required": "computed",
+                                                                "element_type": {
+                                                                    "string": {}
+                                                                },
+                                                                "description": "SR Linux-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": "sros_extensions",
+                                                            "list": {
+                                                                "computed_optional_required": "computed",
+                                                                "element_type": {
+                                                                    "string": {}
+                                                                },
+                                                                "description": "SROS-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "Used to define more granular and OS-specific subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "operational",
+                                                "list": {
+                                                    "computed_optional_required": "computed",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Operational subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "routing",
+                                                "list": {
+                                                    "computed_optional_required": "computed",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Routing-related subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "security",
+                                                "list": {
+                                                    "computed_optional_required": "computed",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Security-related subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "severity",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Severity level to filter on."
+                                                }
+                                            },
+                                            {
+                                                "name": "severity_operator",
+                                                "string": {
+                                                    "computed_optional_required": "computed",
+                                                    "description": "Operator to determine which severity levels to filter on."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Which subsystems to include in the log records. If no subsystems are selected, all subsystems will be included."
+                                    }
+                                }
+                            ],
+                            "description": "SourceSpec defines the desired state of Source"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "description": "SourceStatus defines the observed state of Source"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "source_list",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "fields",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched."
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned."
+                        }
+                    },
+                    {
+                        "name": "label_selector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                        }
+                    },
+                    {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "api_version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "kind",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "annotations",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "labels",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "name",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "spec",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "facilities",
+                                                    "list_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "nested_object": {
+                                                            "attributes": [
+                                                                {
+                                                                    "name": "facility",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Facility name or identifier used when matching log records for this operating system."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "severity",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Severity level used together with the severity operator when evaluating log records for this facility."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "severity_operator",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "How log record severity is compared to the configured Severity for this facility (at or above the level, or exactly that level)."
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "description": "Syslog facilities that messages will be sourced from. When left empty, every facility is matched."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "message_filtering",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "match_mode",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Whether log messages that match the filter rules are forwarded or blocked."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "rules",
+                                                                "list_nested": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "nested_object": {
+                                                                        "attributes": [
+                                                                            {
+                                                                                "name": "operator",
+                                                                                "string": {
+                                                                                    "computed_optional_required": "computed",
+                                                                                    "description": "How Text is matched against the log message for filtering."
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "name": "text",
+                                                                                "string": {
+                                                                                    "computed_optional_required": "computed",
+                                                                                    "description": "Text or pattern compared to the log message using Operator."
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "description": "Filter rules applied to log message text. If the message matches at least one rule, it is forwarded or blocked according to the match mode."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Optional message filtering: evaluate log message text against filter rules and allow or deny forwarding based on the match mode."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "subsystems",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "extensions",
+                                                                "single_nested": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "attributes": [
+                                                                        {
+                                                                            "name": "srl_extensions",
+                                                                            "list": {
+                                                                                "computed_optional_required": "computed",
+                                                                                "element_type": {
+                                                                                    "string": {}
+                                                                                },
+                                                                                "description": "SR Linux-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "name": "sros_extensions",
+                                                                            "list": {
+                                                                                "computed_optional_required": "computed",
+                                                                                "element_type": {
+                                                                                    "string": {}
+                                                                                },
+                                                                                "description": "SROS-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "description": "Used to define more granular and OS-specific subsystems."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "operational",
+                                                                "list": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "element_type": {
+                                                                        "string": {}
+                                                                    },
+                                                                    "description": "Operational subsystems."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "routing",
+                                                                "list": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "element_type": {
+                                                                        "string": {}
+                                                                    },
+                                                                    "description": "Routing-related subsystems."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "security",
+                                                                "list": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "element_type": {
+                                                                        "string": {}
+                                                                    },
+                                                                    "description": "Security-related subsystems."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "severity",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Severity level to filter on."
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "severity_operator",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed",
+                                                                    "description": "Operator to determine which severity levels to filter on."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Which subsystems to include in the log records. If no subsystems are selected, all subsystems will be included."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "SourceSpec defines the desired state of Source"
+                                        }
+                                    },
+                                    {
+                                        "name": "status",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "description": "SourceStatus defines the observed state of Source"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "provider": {
+        "name": "logging"
+    },
+    "resources": [
+        {
+            "name": "destination",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "logging.eda.nokia.com/v1alpha1"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^logging\\\\.eda\\\\.nokia\\\\.com/v1alpha1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "Destination"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^Destination$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.LengthAtMost(253)"
+                                                }
+                                            },
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "regexp"
+                                                        },
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$\"), \"\")"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "required"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "file",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "attributes": [
+                                            {
+                                                "name": "location",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Path to location where log files are written. Refer to the documentation for default and allowed values."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Settings for a file log target."
+                                    }
+                                },
+                                {
+                                    "name": "rotation",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "attributes": [
+                                            {
+                                                "name": "max_entries",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Maximum number of log entries kept in the in-memory buffer. Only supported on SR OS.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.AtLeast(1)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "max_size_megabytes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Maximum size of the in-memory buffer, in megabytes. Only supported on SR Linux.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.AtLeast(1)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "rollover_interval_minutes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Interval, in minutes, at which the current log file is closed and a new one is started. Only supported on SR OS.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.AtLeast(1)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "rollover_size_megabytes",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "File size, in megabytes, at which the current log file is closed and a new one is started. Only supported on SR Linux.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.AtLeast(1)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "rotation_limit",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Number of rolled-over log files to keep before the oldest is discarded.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.AtLeast(1)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "description": "Rotation settings for a Memory or File destination."
+                                    }
+                                },
+                                {
+                                    "name": "syslog",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "attributes": [
+                                            {
+                                                "name": "address",
+                                                "string": {
+                                                    "computed_optional_required": "required",
+                                                    "description": "Address of the syslog server: an IPv4 address, IPv6 address, or DNS name (FQDN)."
+                                                }
+                                            },
+                                            {
+                                                "name": "protocol",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "default": {
+                                                        "static": "UDP"
+                                                    },
+                                                    "description": "Transport protocol used to send syslog messages.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "stringvalidator.OneOf(\n\"TCP\",\n\"UDP\",\n\"TLS\",\n)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "remote_port",
+                                                "int64": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Remote port on the syslog server.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "int64validator.Between(0, 65536)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "router",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Name of the Router custom resource used to reach the syslog server."
+                                                }
+                                            },
+                                            {
+                                                "name": "router_kind",
+                                                "string": {
+                                                    "computed_optional_required": "required",
+                                                    "description": "Router kind used to reach the syslog server.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "stringvalidator.OneOf(\n\"DefaultRouter\",\n\"ManagementRouter\",\n\"Router\",\n)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "tls_profile",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Name of the TLS profile used when syslog is sent over TLS."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Settings for a syslog log target."
+                                    }
+                                },
+                                {
+                                    "name": "type",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "description": "Type of log target.",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.OneOf(\n\"Memory\",\n\"File\",\n\"Syslog\",\n)"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "description": "DestinationSpec defines the desired state of Destination"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "DestinationStatus defines the observed state of Destination"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "name of the Destination"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "log",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "logging.eda.nokia.com/v1alpha1"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^logging\\\\.eda\\\\.nokia\\\\.com/v1alpha1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "Log"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^Log$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.LengthAtMost(253)"
+                                                }
+                                            },
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "regexp"
+                                                        },
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$\"), \"\")"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "required"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "destination_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching destinations to send the log messages to."
+                                    }
+                                },
+                                {
+                                    "name": "destinations",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of destinations to send the log messages to."
+                                    }
+                                },
+                                {
+                                    "name": "node_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching nodes where this log is configured."
+                                    }
+                                },
+                                {
+                                    "name": "nodes",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of nodes where this log is configured."
+                                    }
+                                },
+                                {
+                                    "name": "source_selectors",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Label selector matching sources for the log messages captured by this log."
+                                    }
+                                },
+                                {
+                                    "name": "sources",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "List of Sources that select log messages captured by this log."
+                                    }
+                                }
+                            ],
+                            "description": "LogSpec defines the desired state of Log"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "nodes",
+                                    "list": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "Nodes where this log source has been applied."
+                                    }
+                                }
+                            ],
+                            "description": "LogStatus defines the observed state of Log"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "name of the Log"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "source",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "logging.eda.nokia.com/v1alpha1"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^logging\\\\.eda\\\\.nokia\\\\.com/v1alpha1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "Source"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^Source$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.LengthAtMost(253)"
+                                                }
+                                            },
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "regexp"
+                                                        },
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$\"), \"\")"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "required"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "facilities",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "facility",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "default": {
+                                                            "static": "All"
+                                                        },
+                                                        "description": "Facility name or identifier used when matching log records for this operating system.",
+                                                        "validators": [
+                                                            {
+                                                                "custom": {
+                                                                    "imports": [
+                                                                        {
+                                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                        }
+                                                                    ],
+                                                                    "schema_definition": "stringvalidator.OneOf(\n\"All\",\n\"Kernel\",\n\"User\",\n\"Mail\",\n\"Daemon\",\n\"Auth\",\n\"Syslog\",\n\"LPR\",\n\"News\",\n\"UUCP\",\n\"Cron\",\n\"AuthPriv\",\n\"FTP\",\n\"NTP\",\n\"LogAudit\",\n\"LogAlert\",\n\"Clock\",\n\"Local0\",\n\"Local1\",\n\"Local2\",\n\"Local3\",\n\"Local4\",\n\"Local5\",\n\"Local6\",\n\"Local7\",\n)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "name": "severity",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Severity level used together with the severity operator when evaluating log records for this facility.",
+                                                        "validators": [
+                                                            {
+                                                                "custom": {
+                                                                    "imports": [
+                                                                        {
+                                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                        }
+                                                                    ],
+                                                                    "schema_definition": "stringvalidator.OneOf(\n\"Debug\",\n\"Informational\",\n\"Notice\",\n\"Warning\",\n\"Error\",\n\"Critical\",\n\"Alert\",\n\"Emergency\",\n)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "name": "severity_operator",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "How log record severity is compared to the configured Severity for this facility (at or above the level, or exactly that level).",
+                                                        "validators": [
+                                                            {
+                                                                "custom": {
+                                                                    "imports": [
+                                                                        {
+                                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                        }
+                                                                    ],
+                                                                    "schema_definition": "stringvalidator.OneOf(\n\"Minimum\",\n\"Exact\",\n)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "Syslog facilities that messages will be sourced from. When left empty, every facility is matched."
+                                    }
+                                },
+                                {
+                                    "name": "message_filtering",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "attributes": [
+                                            {
+                                                "name": "match_mode",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "default": {
+                                                        "static": "Allow"
+                                                    },
+                                                    "description": "Whether log messages that match the filter rules are forwarded or blocked.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "stringvalidator.OneOf(\n\"Allow\",\n\"Deny\",\n)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "rules",
+                                                "list_nested": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "nested_object": {
+                                                        "attributes": [
+                                                            {
+                                                                "name": "operator",
+                                                                "string": {
+                                                                    "computed_optional_required": "required",
+                                                                    "description": "How Text is matched against the log message for filtering.",
+                                                                    "validators": [
+                                                                        {
+                                                                            "custom": {
+                                                                                "imports": [
+                                                                                    {
+                                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                                    }
+                                                                                ],
+                                                                                "schema_definition": "stringvalidator.OneOf(\n\"StartsWith\",\n\"Contains\",\n\"Regex\",\n)"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "text",
+                                                                "string": {
+                                                                    "computed_optional_required": "required",
+                                                                    "description": "Text or pattern compared to the log message using Operator."
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "description": "Filter rules applied to log message text. If the message matches at least one rule, it is forwarded or blocked according to the match mode."
+                                                }
+                                            }
+                                        ],
+                                        "description": "Optional message filtering: evaluate log message text against filter rules and allow or deny forwarding based on the match mode."
+                                    }
+                                },
+                                {
+                                    "name": "subsystems",
+                                    "single_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "attributes": [
+                                            {
+                                                "name": "extensions",
+                                                "single_nested": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "attributes": [
+                                                        {
+                                                            "name": "srl_extensions",
+                                                            "list": {
+                                                                "computed_optional_required": "computed_optional",
+                                                                "element_type": {
+                                                                    "string": {}
+                                                                },
+                                                                "description": "SR Linux-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": "sros_extensions",
+                                                            "list": {
+                                                                "computed_optional_required": "computed_optional",
+                                                                "element_type": {
+                                                                    "string": {}
+                                                                },
+                                                                "description": "SROS-specific subsystem selector. Extensions are limited to one operating system per Source."
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "Used to define more granular and OS-specific subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "operational",
+                                                "list": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Operational subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "routing",
+                                                "list": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Routing-related subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "security",
+                                                "list": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "element_type": {
+                                                        "string": {}
+                                                    },
+                                                    "description": "Security-related subsystems."
+                                                }
+                                            },
+                                            {
+                                                "name": "severity",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Severity level to filter on.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "stringvalidator.OneOf(\n\"Debug\",\n\"Informational\",\n\"Notice\",\n\"Warning\",\n\"Error\",\n\"Critical\",\n\"Alert\",\n\"Emergency\",\n)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "severity_operator",
+                                                "string": {
+                                                    "computed_optional_required": "computed_optional",
+                                                    "description": "Operator to determine which severity levels to filter on.",
+                                                    "validators": [
+                                                        {
+                                                            "custom": {
+                                                                "imports": [
+                                                                    {
+                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                    }
+                                                                ],
+                                                                "schema_definition": "stringvalidator.OneOf(\n\"Minimum\",\n\"Exact\",\n)"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "description": "Which subsystems to include in the log records. If no subsystems are selected, all subsystems will be included."
+                                    }
+                                }
+                            ],
+                            "description": "SourceSpec defines the desired state of Source"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "SourceStatus defines the observed state of Source"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "name of the Source"
+                        }
+                    },
+                    {
+                        "name": "namespace",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "the namespace scope in which to operate"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "version": "0.1"
+}
